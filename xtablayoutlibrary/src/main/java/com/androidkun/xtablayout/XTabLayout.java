@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.HorizontalScrollView;
@@ -179,6 +180,7 @@ public class XTabLayout extends HorizontalScrollView {
     private int mTabMaxWidth = Integer.MAX_VALUE;
     private final int mRequestedTabMinWidth;
     private final int mRequestedTabMaxWidth;
+    private  int xTabDisplayNum;
     private final int mScrollableTabMinWidth;
 
     private int mContentInsetStart;
@@ -271,6 +273,7 @@ public class XTabLayout extends HorizontalScrollView {
             mTabTextColors = createColorStateList(mTabTextColors.getDefaultColor(), selected);
         }
 
+        xTabDisplayNum = a.getInt(R.styleable.XTabLayout_xTabDisplayNum, 0);
         mRequestedTabMinWidth = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabMinWidth,
                 INVALID_WIDTH);
         mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabMaxWidth,
@@ -310,6 +313,10 @@ public class XTabLayout extends HorizontalScrollView {
         mTabStrip.setSelectedIndicatorHeight(height);
     }
 
+    public void setxTabDisplayNum(int xTabDisplayNum) {
+        this.xTabDisplayNum = xTabDisplayNum;
+    }
+
     /**
      * Set the scroll position of the tabs. This is useful for when the tabs are being displayed as
      * part of a scrolling container such as {@link ViewPager}.
@@ -346,7 +353,7 @@ public class XTabLayout extends HorizontalScrollView {
         if (updateSelectedText) {
             setSelectedTabView(roundedPosition);
         }
-        Log.w("AAA","end");
+        Log.w("AAA", "end");
     }
 
 
@@ -713,6 +720,7 @@ public class XTabLayout extends HorizontalScrollView {
 
         if (mPagerAdapter != null) {
             final int adapterCount = mPagerAdapter.getCount();
+
             for (int i = 0; i < adapterCount; i++) {
                 addTab(newTab().setText(mPagerAdapter.getPageTitle(i)), false);
             }
@@ -921,7 +929,7 @@ public class XTabLayout extends HorizontalScrollView {
         }
 
         // Now animate the indicator
-        Log.w("AAA","123");
+        Log.w("AAA", "123");
         mTabStrip.animateIndicatorToPosition(newPosition, ANIMATION_DURATION);
     }
 
@@ -1781,7 +1789,7 @@ public class XTabLayout extends HorizontalScrollView {
         }
 
         void animateIndicatorToPosition(final int position, int duration) {
-            Log.w("AAA","animateIndicatorToPosition");
+            Log.w("AAA", "animateIndicatorToPosition");
             if (mIndicatorAnimator != null && mIndicatorAnimator.isRunning()) {
                 mIndicatorAnimator.cancel();
             }
@@ -1901,6 +1909,20 @@ public class XTabLayout extends HorizontalScrollView {
     }
 
     private int getTabMinWidth() {
+        Log.w("AAA","getTabMinWidth  1111");
+        if (mPagerAdapter != null && xTabDisplayNum != 0) {
+            WindowManager wm = (WindowManager) getContext()
+                    .getSystemService(Context.WINDOW_SERVICE);
+            if(mPagerAdapter.getCount()<xTabDisplayNum){
+
+                Log.w("AAA","getTabMinWidth  22222");
+                return wm.getDefaultDisplay().getWidth()/mPagerAdapter.getCount();
+            }else{
+                Log.w("AAA","getTabMinWidth  33333");
+                return wm.getDefaultDisplay().getWidth()/xTabDisplayNum;
+            }
+        }
+        Log.w("AAA","getTabMinWidth  44444");
         if (mRequestedTabMinWidth != INVALID_WIDTH) {
             // If we have been given a min width, use it
             return mRequestedTabMinWidth;
