@@ -353,7 +353,6 @@ public class XTabLayout extends HorizontalScrollView {
         if (updateSelectedText) {
             setSelectedTabView(roundedPosition);
         }
-        Log.w("AAA", "end");
     }
 
 
@@ -849,9 +848,21 @@ public class XTabLayout extends HorizontalScrollView {
         if (MeasureSpec.getMode(widthMeasureSpec) != MeasureSpec.UNSPECIFIED) {
             // If we don't have an unspecified width spec, use the given size to calculate
             // the max tab width
-            mTabMaxWidth = mRequestedTabMaxWidth > 0
-                    ? mRequestedTabMaxWidth
-                    : specWidth - dpToPx(TAB_MIN_WIDTH_MARGIN);
+            if (mPagerAdapter != null && xTabDisplayNum != 0) {
+                if(mPagerAdapter.getCount()==1 || xTabDisplayNum==1){
+                    WindowManager wm = (WindowManager) getContext()
+                            .getSystemService(Context.WINDOW_SERVICE);
+                    mTabMaxWidth = wm.getDefaultDisplay().getWidth();
+                }else {
+                    mTabMaxWidth = mRequestedTabMaxWidth > 0
+                            ? mRequestedTabMaxWidth
+                            : specWidth - dpToPx(TAB_MIN_WIDTH_MARGIN);
+                }
+            }else {
+                mTabMaxWidth = mRequestedTabMaxWidth > 0
+                        ? mRequestedTabMaxWidth
+                        : specWidth - dpToPx(TAB_MIN_WIDTH_MARGIN);
+            }
         }
 
         // Now super measure itself using the (possibly) modified height spec
@@ -929,7 +940,6 @@ public class XTabLayout extends HorizontalScrollView {
         }
 
         // Now animate the indicator
-        Log.w("AAA", "123");
         mTabStrip.animateIndicatorToPosition(newPosition, ANIMATION_DURATION);
     }
 
@@ -1909,20 +1919,17 @@ public class XTabLayout extends HorizontalScrollView {
     }
 
     private int getTabMinWidth() {
-        Log.w("AAA","getTabMinWidth  1111");
         if (mPagerAdapter != null && xTabDisplayNum != 0) {
             WindowManager wm = (WindowManager) getContext()
                     .getSystemService(Context.WINDOW_SERVICE);
-            if(mPagerAdapter.getCount()<xTabDisplayNum){
-
-                Log.w("AAA","getTabMinWidth  22222");
+            if(mPagerAdapter.getCount()==1|| xTabDisplayNum==1){
+                return wm.getDefaultDisplay().getWidth();
+            }else if(mPagerAdapter.getCount()<xTabDisplayNum){
                 return wm.getDefaultDisplay().getWidth()/mPagerAdapter.getCount();
             }else{
-                Log.w("AAA","getTabMinWidth  33333");
                 return wm.getDefaultDisplay().getWidth()/xTabDisplayNum;
             }
         }
-        Log.w("AAA","getTabMinWidth  44444");
         if (mRequestedTabMinWidth != INVALID_WIDTH) {
             // If we have been given a min width, use it
             return mRequestedTabMinWidth;
