@@ -46,10 +46,10 @@
     tabLayout.setupWithViewPager(viewPager);
     
 #更新日志
-##1.0.3
-###<font color=#f00>修改只有一个Tab时Tab未占满屏幕的bug。</font>
-##1.0.4
-###<font color=#f00>增加设置Tab背景色的功能。</font>
+## 1.0.3
+### <font color=#f00>修改只有一个Tab时Tab未占满屏幕的bug。</font>
+## 1.0.4
+###  <font color=#f00>增加设置Tab背景色的功能。</font>
 
     app:xTabBackgroundColor="#fff"
     app:xTabSelectedBackgroundColor="#ff0"
