@@ -45,7 +45,7 @@
     XTabLayout tabLayout = (XTabLayout) findViewById(R.id.xTablayout);
     tabLayout.setupWithViewPager(viewPager);
     
-#更新日志
+# 更新日志
 ## 1.0.3
 ### <font color=#f00>修改只有一个Tab时Tab未占满屏幕的bug。</font>
 ## 1.0.4
