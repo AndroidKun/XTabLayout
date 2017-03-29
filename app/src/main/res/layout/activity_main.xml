@@ -12,6 +12,8 @@
         android:id="@+id/xTablayout"
         android:layout_width="match_parent"
         android:layout_height="130px"
+        app:xTabBackgroundColor="#fff"
+        app:xTabSelectedBackgroundColor="#ff0"
         app:xTabMode="scrollable"
         app:xTabIndicatorColor="#0f0"
         app:xTabIndicatorHeight="2dp"

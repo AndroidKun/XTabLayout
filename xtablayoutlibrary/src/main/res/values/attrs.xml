@@ -15,7 +15,8 @@
         <attr name="xTabSelectedTextColor" format="color"/>
         <attr name="xTabMinWidth" format="dimension"/>
         <attr name="xTabMaxWidth" format="dimension"/>
-        <attr name="xTabBackground" format="reference|color"/>
+        <attr name="xTabBackgroundColor" format="reference|color"/>
+        <attr name="xTabSelectedBackgroundColor" format="reference|color"/>
         <attr name="xTabContentStart" format="dimension"/>
         <attr name="xTabMode">
             <enum name="scrollable" value="0x00000000" />

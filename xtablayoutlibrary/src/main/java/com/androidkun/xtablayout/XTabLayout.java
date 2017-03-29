@@ -175,7 +175,8 @@ public class XTabLayout extends HorizontalScrollView {
     private float mTabSelectedTextSize = 0;
     private float mTabTextMultiLineSize;
 
-    private final int mTabBackgroundResId;
+    private final int xTabBackgroundColor;
+    private final int xTabSelectedBackgroundColor;
 
     private int mTabMaxWidth = Integer.MAX_VALUE;
     private final int mRequestedTabMinWidth;
@@ -278,7 +279,9 @@ public class XTabLayout extends HorizontalScrollView {
                 INVALID_WIDTH);
         mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabMaxWidth,
                 INVALID_WIDTH);
-        mTabBackgroundResId = a.getResourceId(R.styleable.XTabLayout_xTabBackground, 0);
+        xTabBackgroundColor = a.getColor(R.styleable.XTabLayout_xTabBackgroundColor, 0);
+        xTabSelectedBackgroundColor = a.getColor(R.styleable.XTabLayout_xTabSelectedBackgroundColor, 0);
+
         mContentInsetStart = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabContentStart, 0);
         mMode = a.getInt(R.styleable.XTabLayout_xTabMode, MODE_FIXED);
         mTabGravity = a.getInt(R.styleable.XTabLayout_xTabGravity, GRAVITY_FILL);
@@ -1321,10 +1324,10 @@ public class XTabLayout extends HorizontalScrollView {
 
         public TabView(Context context) {
             super(context);
-            if (mTabBackgroundResId != 0) {
+          /*  if (mTabBackgroundResId != 0) {
                 setBackgroundDrawable(
                         AppCompatDrawableManager.get().getDrawable(context, mTabBackgroundResId));
-            }
+            }*/
             ViewCompat.setPaddingRelative(this, mTabPaddingStart, mTabPaddingTop,
                     mTabPaddingEnd, mTabPaddingBottom);
             setGravity(Gravity.CENTER);
@@ -1349,9 +1352,15 @@ public class XTabLayout extends HorizontalScrollView {
             final boolean changed = (isSelected() != selected);
             super.setSelected(selected);
             if (!selected) {
+                if(xTabBackgroundColor!=0) {
+                    setBackgroundColor(xTabBackgroundColor);
+                }
                 mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize);
             }
             if (changed && selected) {
+                if(xTabSelectedBackgroundColor!=0){
+                    setBackgroundColor(xTabSelectedBackgroundColor);
+                }
                 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
 
                 if (mTextView != null) {
