@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -72,6 +73,9 @@ public class XTabLayout extends HorizontalScrollView {
     private static final int DEFAULT_HEIGHT = 48; // dps
     private static final int TAB_MIN_WIDTH_MARGIN = 56; //dps
     private static final int FIXED_WRAP_GUTTER_MIN = 16; //dps
+    //当Tab被选中时文本长度大于等于Tab的宽度时，
+    // Tab会另外增加SELECT_TAB_SELECTED_ADD_WIDTH的长度
+    private static final int SELECTED_TAB_ADD_WIDTH = 30; //dps
     private static final int MOTION_NON_ADJACENT_OFFSET = 24;
 
     private static final int ANIMATION_DURATION = 300;
@@ -768,6 +772,27 @@ public class XTabLayout extends HorizontalScrollView {
 
     private void addTabView(XTabLayout.Tab tab, boolean setSelected) {
         final XTabLayout.TabView tabView = tab.mView;
+        if(mTabSelectedTextSize!=0) {
+            tabView.post(new Runnable() {
+                @Override
+                public void run() {
+                    int tabWidth = tabView.getWidth();
+                    String text = tabView.getText();
+                    if(!TextUtils.isEmpty(text)) {
+                        Paint paint = new Paint();
+                        paint.setTextSize(mTabSelectedTextSize);
+                        Rect rect = new Rect();
+                        paint.getTextBounds(text, 0, text.length(),rect);
+                        if(rect.width()>= tabWidth){
+                            tabWidth = rect.width()+dpToPx(SELECTED_TAB_ADD_WIDTH);
+                            ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
+                            layoutParams.width = tabWidth;
+                            tabView.setLayoutParams(layoutParams);
+                        }
+                     }
+                }
+            });
+        }
         mTabStrip.addView(tabView, createLayoutParamsForTabs());
         if (setSelected) {
             tabView.setSelected(true);
@@ -1075,6 +1100,10 @@ public class XTabLayout extends HorizontalScrollView {
             return mTag;
         }
 
+        public int getTextWidth(){
+            return mView.getTextWidth();
+        }
+
         /**
          * Give this Tab an arbitrary object to hold for later use.
          *
@@ -1171,6 +1200,7 @@ public class XTabLayout extends HorizontalScrollView {
         public CharSequence getText() {
             return mText;
         }
+
 
         /**
          * Set the icon displayed on this tab.
@@ -1333,6 +1363,20 @@ public class XTabLayout extends HorizontalScrollView {
             setGravity(Gravity.CENTER);
             setOrientation(VERTICAL);
             setClickable(true);
+        }
+
+        public String getText(){
+            return mTextView.getText().toString();
+        }
+
+        public int getTextWidth(){
+            if(TextUtils.isEmpty(mTextView.getText().toString())){
+                return 0;
+            }
+            Rect rect = new Rect();
+            String content = mTextView.getText().toString();
+            mTextView.getPaint().getTextBounds(content,0,content.length(),rect);
+            return rect.width();
         }
 
         @Override
@@ -1658,6 +1702,7 @@ public class XTabLayout extends HorizontalScrollView {
             if (mSelectedIndicatorWidth != width) {
                 mSelectedIndicatorWidth = width;
                 ViewCompat.postInvalidateOnAnimation(this);
+
             }
         }
 
@@ -1772,14 +1817,14 @@ public class XTabLayout extends HorizontalScrollView {
                 right = selectedTitle.getRight();
 
                 int haftWidth = 0;
-           /*     if(mSelectedIndicatorWidth!=0){
+                if(mSelectedIndicatorWidth!=0){
                     int maxWidth = mIndicatorRight-mIndicatorLeft;
                     if(maxWidth>mSelectedIndicatorWidth){
                         haftWidth = (maxWidth-mSelectedIndicatorWidth)/2;
                         left += haftWidth;
                         right -= haftWidth;
                     }
-                }*/
+                }
 
                 if (mSelectionOffset > 0f && mSelectedPosition < getChildCount() - 1) {
                     // Draw the selection partway between the tabs
@@ -1890,6 +1935,12 @@ public class XTabLayout extends HorizontalScrollView {
                         mIndicatorLeft += (maxWidth - mSelectedIndicatorWidth) / 2;
                         mIndicatorRight -= (maxWidth - mSelectedIndicatorWidth) / 2;
                     }
+                }else{
+                    int maxWidth = mIndicatorRight - mIndicatorLeft;
+                    if (maxWidth > mSelectedTab.getTextWidth()) {
+                        mIndicatorLeft += (maxWidth - mSelectedTab.getTextWidth()) / 2;
+                        mIndicatorRight -= (maxWidth - mSelectedTab.getTextWidth()) / 2;
+                    }
                 }
 
                 canvas.drawRect(mIndicatorLeft, getHeight() - mSelectedIndicatorHeight,
@@ -1941,6 +1992,7 @@ public class XTabLayout extends HorizontalScrollView {
         }
         if (mRequestedTabMinWidth != INVALID_WIDTH) {
             // If we have been given a min width, use it
+            //默认再加上一点边距
             return mRequestedTabMinWidth;
         }
         // Else, we'll use the default value

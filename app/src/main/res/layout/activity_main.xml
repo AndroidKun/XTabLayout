@@ -12,15 +12,14 @@
         android:id="@+id/xTablayout"
         android:layout_width="match_parent"
         android:layout_height="130px"
-        app:xTabBackgroundColor="#fff"
-        app:xTabSelectedBackgroundColor="#ff0"
+        app:xTabBackgroundColor="#ff0"
         app:xTabMode="scrollable"
         app:xTabIndicatorColor="#0f0"
         app:xTabIndicatorHeight="2dp"
-        app:xTabIndicatorWidth="15dp"
         app:xTabSelectedTextColor="#f00"
         app:xTabTextColor="#000"
         app:xTabTextSize="15sp"
+        app:xTabDisplayNum="4"
         app:xTabSelectedTextSize="20sp"/>
 
 
