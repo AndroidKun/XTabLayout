@@ -75,7 +75,7 @@ public class XTabLayout extends HorizontalScrollView {
     private static final int FIXED_WRAP_GUTTER_MIN = 16; //dps
     //当Tab被选中时文本长度大于等于Tab的宽度时，
     // Tab会另外增加SELECT_TAB_SELECTED_ADD_WIDTH的长度
-    private static final int SELECTED_TAB_ADD_WIDTH = 30; //dps
+    private static final int SELECTED_TAB_ADD_WIDTH = 20; //dps
     private static final int MOTION_NON_ADJACENT_OFFSET = 24;
 
     private static final int ANIMATION_DURATION = 300;
@@ -783,7 +783,7 @@ public class XTabLayout extends HorizontalScrollView {
                         paint.setTextSize(mTabSelectedTextSize);
                         Rect rect = new Rect();
                         paint.getTextBounds(text, 0, text.length(),rect);
-                        if(rect.width()>= tabWidth){
+                        if(tabWidth - rect.width() < dpToPx(SELECTED_TAB_ADD_WIDTH)){
                             tabWidth = rect.width()+dpToPx(SELECTED_TAB_ADD_WIDTH);
                             ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
                             layoutParams.width = tabWidth;
