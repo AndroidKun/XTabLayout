@@ -5,7 +5,7 @@
 ### 1.添加XTabLayout依赖库
 #### 在app目录下的build.gradle的dependencies中添加如下引用：
 
-    compile 'com.androidkun:XTabLayout:1.0.4'
+    compile 'com.androidkun:XTabLayout:1.0.6'
     
 ### 2.在布局文件中设置XTabLayout属性
 
@@ -56,7 +56,10 @@
 
 ### 两个属性分别对应Tab未选中和被选中的背景色，效果图如下：
 ![这里写图片描述](http://img.blog.csdn.net/20170329122554188?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTE1MzM1ODg4Njc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-    
+
+## 1.0.5 & 1.0.6 
+### <font color=#f00>增加设置指示器长度随Tab文本内容长度变化的功能。</font>
+### 使用方式：不设置xTabIndicatorWidth属性即可    
     
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
