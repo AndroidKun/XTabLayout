@@ -81,6 +81,8 @@ public class XTabLayout extends HorizontalScrollView {
     private static final int ANIMATION_DURATION = 300;
 
     private static final Pools.Pool<Tab> sTabPool = new Pools.SynchronizedPool<>(16);
+    //文本字母是否小写转大写
+    private boolean xTabTextAllCaps = false;
 
     /**
      * Scrollable tabs display a subset of tabs at any given moment, and can contain longer tab
@@ -248,6 +250,8 @@ public class XTabLayout extends HorizontalScrollView {
         mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabPaddingBottom,
                 mTabPaddingBottom);
 
+        xTabTextAllCaps = a.getBoolean(R.styleable.XTabLayout_xTabTextAllCaps,false);
+
         mTabTextAppearance = a.getResourceId(R.styleable.XTabLayout_xTabTextAppearance,
                 android.support.design.R.style.TextAppearance_Design_Tab);
         mTabTextSize = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabTextSize, 0);
@@ -298,6 +302,14 @@ public class XTabLayout extends HorizontalScrollView {
 
         // Now apply the tab mode and gravity
         applyModeAndGravity();
+    }
+
+    /**
+     * 设置字母是否自动小写转大写
+     */
+    public void setAllCaps(boolean allCaps){
+        xTabTextAllCaps = allCaps;
+//        invalidate();
     }
 
     /**
@@ -783,6 +795,7 @@ public class XTabLayout extends HorizontalScrollView {
                         paint.setTextSize(mTabSelectedTextSize);
                         Rect rect = new Rect();
                         paint.getTextBounds(text, 0, text.length(),rect);
+
                         if(tabWidth - rect.width() < dpToPx(SELECTED_TAB_ADD_WIDTH)){
                             tabWidth = rect.width()+dpToPx(SELECTED_TAB_ADD_WIDTH);
                             ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
@@ -1602,6 +1615,8 @@ public class XTabLayout extends HorizontalScrollView {
             final boolean hasText = !TextUtils.isEmpty(text);
             if (textView != null) {
                 if (hasText) {
+                    Log.w("AAA","title:"+text);
+                    textView.setAllCaps(xTabTextAllCaps);
                     textView.setText(text);
                     textView.setVisibility(VISIBLE);
                     setVisibility(VISIBLE);
@@ -1853,7 +1868,7 @@ public class XTabLayout extends HorizontalScrollView {
         }
 
         void animateIndicatorToPosition(final int position, int duration) {
-            Log.w("AAA", "animateIndicatorToPosition");
+
             if (mIndicatorAnimator != null && mIndicatorAnimator.isRunning()) {
                 mIndicatorAnimator.cancel();
             }

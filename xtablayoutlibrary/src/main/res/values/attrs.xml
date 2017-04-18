@@ -27,5 +27,6 @@
         <attr name="xTabTextSize" format="dimension"/>
         <attr name="xTabSelectedTextSize" format="dimension"/>
         <attr name="xTabDisplayNum" format="integer"/>
+        <attr name="xTabTextAllCaps" format="boolean"/>
     </declare-styleable>
 </resources>
