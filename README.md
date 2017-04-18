@@ -59,7 +59,11 @@
 
 ## 1.0.5 & 1.0.6 
 ### <font color=#f00>增加设置指示器长度随Tab文本内容长度变化的功能。</font>
-### 使用方式：不设置xTabIndicatorWidth属性即可    
+### 使用方式：不设置xTabIndicatorWidth属性即可  
+
+## 1.0.7
+### <font color=#f00>增加设置标题字母大小写转换功能，默认小写不自动转大写</font>
+### 使用方式：在xml文件中添加app:xTabTextAllCaps="false"或者在代码中调用xTabLayout.setAllCaps(false); 
     
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
