@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -187,13 +188,18 @@ public class XTabLayout extends HorizontalScrollView {
     private int mTabMaxWidth = Integer.MAX_VALUE;
     private final int mRequestedTabMinWidth;
     private final int mRequestedTabMaxWidth;
-    private  int xTabDisplayNum;
+    private int xTabDisplayNum;
     private final int mScrollableTabMinWidth;
 
     private int mContentInsetStart;
 
     private int mTabGravity;
     private int mMode;
+
+    private int dividerWidth;
+    private int dividerHeight;
+    private int dividerColor;
+    private int dividerGravity;
 
     private XTabLayout.OnTabSelectedListener mOnTabSelectedListener;
 
@@ -250,7 +256,7 @@ public class XTabLayout extends HorizontalScrollView {
         mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabPaddingBottom,
                 mTabPaddingBottom);
 
-        xTabTextAllCaps = a.getBoolean(R.styleable.XTabLayout_xTabTextAllCaps,false);
+        xTabTextAllCaps = a.getBoolean(R.styleable.XTabLayout_xTabTextAllCaps, false);
 
         mTabTextAppearance = a.getResourceId(R.styleable.XTabLayout_xTabTextAppearance,
                 android.support.design.R.style.TextAppearance_Design_Tab);
@@ -293,6 +299,12 @@ public class XTabLayout extends HorizontalScrollView {
         mContentInsetStart = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabContentStart, 0);
         mMode = a.getInt(R.styleable.XTabLayout_xTabMode, MODE_FIXED);
         mTabGravity = a.getInt(R.styleable.XTabLayout_xTabGravity, GRAVITY_FILL);
+
+        dividerWidth = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabDividerWidth, 0);
+        dividerHeight = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabDividerHeight, 0);
+        dividerColor = a.getColor(R.styleable.XTabLayout_xTabDividerColor, Color.BLACK);
+        dividerGravity = a.getInteger(R.styleable.XTabLayout_xTabDividerGravity, DividerDrawable.CENTER);
+
         a.recycle();
 
         // TODO add attr for these
@@ -302,12 +314,65 @@ public class XTabLayout extends HorizontalScrollView {
 
         // Now apply the tab mode and gravity
         applyModeAndGravity();
+
+        //添加分割线
+        addDivider();
+    }
+
+    /**
+     * 添加分割线
+     */
+    private void addDivider() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (dividerWidth > 0) {
+                    LinearLayout linearLayout = (LinearLayout) getChildAt(0);
+                    linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+                    DividerDrawable dividerDrawable = new DividerDrawable(getContext());
+                    dividerDrawable.setDividerSize(dividerWidth, dividerHeight);
+                    dividerDrawable.setColor(dividerColor);
+                    dividerDrawable.setGravity(dividerGravity);
+                    linearLayout.setDividerDrawable(dividerDrawable);
+                }
+            }
+        });
+    }
+
+    /**
+     * 设置分割线长宽
+     * @param width
+     * @param height
+     *        当height =0 时，则分割线长度占满
+     */
+    public void setDividerSize(int width,int height){
+        dividerWidth = width;
+        dividerHeight = height;
+        addDivider();
+    }
+
+    /**
+     * 设置分割线颜色
+     * @param color
+     */
+    public void setDividerColor(int color){
+        dividerColor = color;
+        addDivider();
+    }
+
+    /**
+     * 设置分割线位置
+     */
+    public void setDividerGravity(int gravity){
+        dividerGravity = gravity;
+        addDivider();
+
     }
 
     /**
      * 设置字母是否自动小写转大写
      */
-    public void setAllCaps(boolean allCaps){
+    public void setAllCaps(boolean allCaps) {
         xTabTextAllCaps = allCaps;
 //        invalidate();
     }
@@ -784,25 +849,25 @@ public class XTabLayout extends HorizontalScrollView {
 
     private void addTabView(XTabLayout.Tab tab, boolean setSelected) {
         final XTabLayout.TabView tabView = tab.mView;
-        if(mTabSelectedTextSize!=0) {
+        if (mTabSelectedTextSize != 0) {
             tabView.post(new Runnable() {
                 @Override
                 public void run() {
                     int tabWidth = tabView.getWidth();
                     String text = tabView.getText();
-                    if(!TextUtils.isEmpty(text)) {
+                    if (!TextUtils.isEmpty(text)) {
                         Paint paint = new Paint();
                         paint.setTextSize(mTabSelectedTextSize);
                         Rect rect = new Rect();
-                        paint.getTextBounds(text, 0, text.length(),rect);
+                        paint.getTextBounds(text, 0, text.length(), rect);
 
-                        if(tabWidth - rect.width() < dpToPx(SELECTED_TAB_ADD_WIDTH)){
-                            tabWidth = rect.width()+dpToPx(SELECTED_TAB_ADD_WIDTH);
+                        if (tabWidth - rect.width() < dpToPx(SELECTED_TAB_ADD_WIDTH)) {
+                            tabWidth = rect.width() + dpToPx(SELECTED_TAB_ADD_WIDTH);
                             ViewGroup.LayoutParams layoutParams = tabView.getLayoutParams();
                             layoutParams.width = tabWidth;
                             tabView.setLayoutParams(layoutParams);
                         }
-                     }
+                    }
                 }
             });
         }
@@ -890,16 +955,16 @@ public class XTabLayout extends HorizontalScrollView {
             // If we don't have an unspecified width spec, use the given size to calculate
             // the max tab width
             if (mPagerAdapter != null && xTabDisplayNum != 0) {
-                if(mPagerAdapter.getCount()==1 || xTabDisplayNum==1){
+                if (mPagerAdapter.getCount() == 1 || xTabDisplayNum == 1) {
                     WindowManager wm = (WindowManager) getContext()
                             .getSystemService(Context.WINDOW_SERVICE);
                     mTabMaxWidth = wm.getDefaultDisplay().getWidth();
-                }else {
+                } else {
                     mTabMaxWidth = mRequestedTabMaxWidth > 0
                             ? mRequestedTabMaxWidth
                             : specWidth - dpToPx(TAB_MIN_WIDTH_MARGIN);
                 }
-            }else {
+            } else {
                 mTabMaxWidth = mRequestedTabMaxWidth > 0
                         ? mRequestedTabMaxWidth
                         : specWidth - dpToPx(TAB_MIN_WIDTH_MARGIN);
@@ -1113,7 +1178,7 @@ public class XTabLayout extends HorizontalScrollView {
             return mTag;
         }
 
-        public int getTextWidth(){
+        public int getTextWidth() {
             return mView.getTextWidth();
         }
 
@@ -1378,17 +1443,17 @@ public class XTabLayout extends HorizontalScrollView {
             setClickable(true);
         }
 
-        public String getText(){
+        public String getText() {
             return mTextView.getText().toString();
         }
 
-        public int getTextWidth(){
-            if(TextUtils.isEmpty(mTextView.getText().toString())){
+        public int getTextWidth() {
+            if (TextUtils.isEmpty(mTextView.getText().toString())) {
                 return 0;
             }
             Rect rect = new Rect();
             String content = mTextView.getText().toString();
-            mTextView.getPaint().getTextBounds(content,0,content.length(),rect);
+            mTextView.getPaint().getTextBounds(content, 0, content.length(), rect);
             return rect.width();
         }
 
@@ -1409,13 +1474,13 @@ public class XTabLayout extends HorizontalScrollView {
             final boolean changed = (isSelected() != selected);
             super.setSelected(selected);
             if (!selected) {
-                if(xTabBackgroundColor!=0) {
+                if (xTabBackgroundColor != 0) {
                     setBackgroundColor(xTabBackgroundColor);
                 }
                 mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize);
             }
             if (changed && selected) {
-                if(xTabSelectedBackgroundColor!=0){
+                if (xTabSelectedBackgroundColor != 0) {
                     setBackgroundColor(xTabSelectedBackgroundColor);
                 }
                 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
@@ -1615,7 +1680,7 @@ public class XTabLayout extends HorizontalScrollView {
             final boolean hasText = !TextUtils.isEmpty(text);
             if (textView != null) {
                 if (hasText) {
-                    Log.w("AAA","title:"+text);
+                    Log.w("AAA", "title:" + text);
                     textView.setAllCaps(xTabTextAllCaps);
                     textView.setText(text);
                     textView.setVisibility(VISIBLE);
@@ -1832,10 +1897,10 @@ public class XTabLayout extends HorizontalScrollView {
                 right = selectedTitle.getRight();
 
                 int haftWidth = 0;
-                if(mSelectedIndicatorWidth!=0){
-                    int maxWidth = mIndicatorRight-mIndicatorLeft;
-                    if(maxWidth>mSelectedIndicatorWidth){
-                        haftWidth = (maxWidth-mSelectedIndicatorWidth)/2;
+                if (mSelectedIndicatorWidth != 0) {
+                    int maxWidth = mIndicatorRight - mIndicatorLeft;
+                    if (maxWidth > mSelectedIndicatorWidth) {
+                        haftWidth = (maxWidth - mSelectedIndicatorWidth) / 2;
                         left += haftWidth;
                         right -= haftWidth;
                     }
@@ -1950,7 +2015,7 @@ public class XTabLayout extends HorizontalScrollView {
                         mIndicatorLeft += (maxWidth - mSelectedIndicatorWidth) / 2;
                         mIndicatorRight -= (maxWidth - mSelectedIndicatorWidth) / 2;
                     }
-                }else{
+                } else {
                     int maxWidth = mIndicatorRight - mIndicatorLeft;
                     if (maxWidth > mSelectedTab.getTextWidth()) {
                         mIndicatorLeft += (maxWidth - mSelectedTab.getTextWidth()) / 2;
@@ -1997,12 +2062,12 @@ public class XTabLayout extends HorizontalScrollView {
         if (mPagerAdapter != null && xTabDisplayNum != 0) {
             WindowManager wm = (WindowManager) getContext()
                     .getSystemService(Context.WINDOW_SERVICE);
-            if(mPagerAdapter.getCount()==1|| xTabDisplayNum==1){
+            if (mPagerAdapter.getCount() == 1 || xTabDisplayNum == 1) {
                 return wm.getDefaultDisplay().getWidth();
-            }else if(mPagerAdapter.getCount()<xTabDisplayNum){
-                return wm.getDefaultDisplay().getWidth()/mPagerAdapter.getCount();
-            }else{
-                return wm.getDefaultDisplay().getWidth()/xTabDisplayNum;
+            } else if (mPagerAdapter.getCount() < xTabDisplayNum) {
+                return wm.getDefaultDisplay().getWidth() / mPagerAdapter.getCount();
+            } else {
+                return wm.getDefaultDisplay().getWidth() / xTabDisplayNum;
             }
         }
         if (mRequestedTabMinWidth != INVALID_WIDTH) {

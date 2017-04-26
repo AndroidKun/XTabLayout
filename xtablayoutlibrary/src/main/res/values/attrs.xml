@@ -28,5 +28,14 @@
         <attr name="xTabSelectedTextSize" format="dimension"/>
         <attr name="xTabDisplayNum" format="integer"/>
         <attr name="xTabTextAllCaps" format="boolean"/>
+
+        <attr name="xTabDividerHeight" format="dimension"/>
+        <attr name="xTabDividerWidth" format="dimension"/>
+        <attr name="xTabDividerColor" format="color"/>
+        <attr name="xTabDividerGravity">
+            <enum name="top" value="0x00000000" />
+            <enum name="center" value="0x00000001" />
+            <enum name="bottom" value="0x00000002" />
+        </attr>
     </declare-styleable>
 </resources>

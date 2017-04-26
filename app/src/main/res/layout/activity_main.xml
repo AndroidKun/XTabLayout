@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.androidkun.xtablayout.MainActivity">
+    tools:context="com.androidkun.xtablayout.MainActivity"
+    android:background="#ff0">
 
     <com.androidkun.xtablayout.XTabLayout
         android:id="@+id/xTablayout"
@@ -20,7 +21,10 @@
         app:xTabTextColor="#000"
         app:xTabTextSize="15sp"
         app:xTabDisplayNum="4"
-        app:xTabSelectedTextSize="20sp"/>
+        app:xTabSelectedTextSize="20sp"
+        app:xTabDividerWidth="2dp"
+        app:xTabDividerHeight="15dp"
+        app:xTabDividerColor="#000" />
 
 
     <android.support.v4.view.ViewPager
