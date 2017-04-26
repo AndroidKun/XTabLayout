@@ -72,18 +72,18 @@
 ### 使用方式：
 ### 1.xml:
  
-  app:xTabDividerWidth="2dp"
-  app:xTabDividerHeight="15dp"
-  app:xTabDividerColor="#000"
-  app:xTabDividerGravity="center"
+    app:xTabDividerWidth="2dp"
+    app:xTabDividerHeight="15dp"
+    app:xTabDividerColor="#000"
+    app:xTabDividerGravity="center"
  
 ### 不设置xTabDividerHeight属性或者赋值为0时则分割线高度占满
 
 ### 2.java
   
-  tabLayout.setDividerSize(5,20);
-  tabLayout.setDividerColor(Color.BLACK);
-  tabLayout.setDividerGravity(DividerDrawable.CENTER);
+    tabLayout.setDividerSize(5,20);
+    tabLayout.setDividerColor(Color.BLACK);
+    tabLayout.setDividerGravity(DividerDrawable.CENTER);
   
 ### setDividerSize方法中第二个参数为高度，如果设置为0时则分割线高度占满
     
