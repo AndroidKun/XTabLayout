@@ -5,7 +5,7 @@
 ### 1.添加XTabLayout依赖库
 #### 在app目录下的build.gradle的dependencies中添加如下引用：
 
-    compile 'com.androidkun:XTabLayout:1.0.7'
+    compile 'com.androidkun:XTabLayout:1.0.8'
     
 ### 2.在布局文件中设置XTabLayout属性
 
