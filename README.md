@@ -64,6 +64,28 @@
 ## 1.0.7
 ### <font color=#f00>增加设置标题字母大小写转换功能，默认小写不自动转大写</font>
 ### 使用方式：在xml文件中添加app:xTabTextAllCaps="false"或者在代码中调用xTabLayout.setAllCaps(false); 
+
+
+## .0.8
+### font color=#f00>增加设置分割线功能</font>
+![这里写图片描述](http://img.blog.csdn.net/20170426123837504?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTE1MzM1ODg4Njc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+### 使用方式：
+### 1.xml:
+ 
+  app:xTabDividerWidth="2dp"
+  app:xTabDividerHeight="15dp"
+  app:xTabDividerColor="#000"
+  app:xTabDividerGravity="center"
+ 
+### 不设置xTabDividerHeight属性或者赋值为0时则分割线高度占满
+
+### 2.java
+  
+  tabLayout.setDividerSize(5,20);
+  tabLayout.setDividerColor(Color.BLACK);
+  tabLayout.setDividerGravity(DividerDrawable.CENTER);
+  
+### setDividerSize方法中第二个参数为高度，如果设置为0时则分割线高度占满
     
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
