@@ -79,7 +79,7 @@
  
 ### 不设置xTabDividerHeight属性或者赋值为0时则分割线高度占满
 
-### 2.java
+### 2.java:
   
     tabLayout.setDividerSize(5,20);
     tabLayout.setDividerColor(Color.BLACK);
