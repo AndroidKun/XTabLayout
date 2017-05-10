@@ -70,14 +70,6 @@
 ### 增加设置分割线功能
 ![这里写图片描述](http://img.blog.csdn.net/20170426123837504?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTE1MzM1ODg4Njc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
-## 1.0.9
-### <font color=#f00>优化设置指示器长度功能</font>
-### 使用方式：
-### a.明确指定指示器为某个长度则设置xTabIndicatorWidth
-### b.指定指示器长度跟随文本变化则设置xTabDividerWidthWidthText
-### c.如果需要指示器长度占满，则两个属性都不设置，默认占满。
-
-
 ### 使用方式：
 ### 1.xml:
  
@@ -95,6 +87,13 @@
     tabLayout.setDividerGravity(DividerDrawable.CENTER);
   
 ### setDividerSize方法中第二个参数为高度，如果设置为0时则分割线高度占满
+
+## 1.0.9
+### <font color=#f00>优化设置指示器长度功能</font>
+### 使用方式：
+### a.明确指定指示器为某个长度则设置xTabIndicatorWidth
+### b.指定指示器长度跟随文本变化则设置xTabDividerWidthWidthText
+### c.如果需要指示器长度占满，则两个属性都不设置，默认占满。
     
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
