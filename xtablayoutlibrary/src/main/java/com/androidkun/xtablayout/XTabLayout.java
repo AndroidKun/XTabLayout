@@ -55,6 +55,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static android.R.attr.maxWidth;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_DRAGGING;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_IDLE;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_SETTLING;
@@ -84,6 +85,8 @@ public class XTabLayout extends HorizontalScrollView {
     private static final Pools.Pool<Tab> sTabPool = new Pools.SynchronizedPool<>(16);
     //文本字母是否小写转大写
     private boolean xTabTextAllCaps = false;
+    //指示器长度是否随TextView长度变化
+    private boolean xTabDividerWidthWidthText = false;
 
     /**
      * Scrollable tabs display a subset of tabs at any given moment, and can contain longer tab
@@ -304,6 +307,8 @@ public class XTabLayout extends HorizontalScrollView {
         dividerHeight = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabDividerHeight, 0);
         dividerColor = a.getColor(R.styleable.XTabLayout_xTabDividerColor, Color.BLACK);
         dividerGravity = a.getInteger(R.styleable.XTabLayout_xTabDividerGravity, DividerDrawable.CENTER);
+
+        xTabDividerWidthWidthText = a.getBoolean(R.styleable.XTabLayout_xTabDividerWidthWidthText, false);
 
         a.recycle();
 
@@ -1897,6 +1902,15 @@ public class XTabLayout extends HorizontalScrollView {
                 right = selectedTitle.getRight();
 
                 int haftWidth = 0;
+                if(mSelectedIndicatorWidth ==0
+                        &&!xTabDividerWidthWidthText) mSelectedIndicatorWidth = maxWidth;
+
+               /* int maxWidth = mIndicatorRight - mIndicatorLeft;
+                if (maxWidth > mSelectedIndicatorWidth) {
+                    haftWidth = (maxWidth - mSelectedIndicatorWidth) / 2;
+                    left += haftWidth;
+                    right -= haftWidth;
+                }*/
                 if (mSelectedIndicatorWidth != 0) {
                     int maxWidth = mIndicatorRight - mIndicatorLeft;
                     if (maxWidth > mSelectedIndicatorWidth) {
@@ -2009,7 +2023,12 @@ public class XTabLayout extends HorizontalScrollView {
             // Thick colored underline below the current selection
             if (mIndicatorLeft >= 0 && mIndicatorRight > mIndicatorLeft) {
 
-                if (mSelectedIndicatorWidth != 0) {
+               /* int maxWidth = mIndicatorRight - mIndicatorLeft;
+                if (maxWidth > mSelectedIndicatorWidth) {
+                    mIndicatorLeft += (maxWidth - mSelectedIndicatorWidth) / 2;
+                    mIndicatorRight -= (maxWidth - mSelectedIndicatorWidth) / 2;
+                }*/
+                if (mSelectedIndicatorWidth != 0  &&!xTabDividerWidthWidthText) {
                     int maxWidth = mIndicatorRight - mIndicatorLeft;
                     if (maxWidth > mSelectedIndicatorWidth) {
                         mIndicatorLeft += (maxWidth - mSelectedIndicatorWidth) / 2;

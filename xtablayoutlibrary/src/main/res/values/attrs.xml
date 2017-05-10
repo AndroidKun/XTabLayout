@@ -37,5 +37,7 @@
             <enum name="center" value="0x00000001" />
             <enum name="bottom" value="0x00000002" />
         </attr>
+
+        <attr name="xTabDividerWidthWidthText" format="boolean"/>
     </declare-styleable>
 </resources>
