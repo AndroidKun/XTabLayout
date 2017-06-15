@@ -5,7 +5,7 @@
 ### 1.添加XTabLayout依赖库
 #### 在app目录下的build.gradle的dependencies中添加如下引用：
 
-    compile 'com.androidkun:XTabLayout:1.0.9'
+    compile 'com.androidkun:XTabLayout:1.1.0'
     
 ### 2.在布局文件中设置XTabLayout属性
 
@@ -94,6 +94,16 @@
 ### a.明确指定指示器为某个长度则设置xTabIndicatorWidth
 ### b.指定指示器长度跟随文本变化则设置xTabDividerWidthWidthText
 ### c.如果需要指示器长度占满，则两个属性都不设置，默认占满。
-    
+
+## 1.1.0
+### <font color=#f00>增加设置字体粗体功能</font>
+![这里写图片描述](http://img.blog.csdn.net/20170615123443179?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTE1MzM1ODg4Njc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+### 使用方式：
+   
+        <!-- 设置选中Tab的文本是否粗体显示-->
+        app:xTabTextSelectedBold="true"
+          <!-- 设置未选中Tab的文本是否粗体显示-->
+        app:xTabTextBold="true"
+        
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
