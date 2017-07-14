@@ -26,7 +26,8 @@
         app:xTabDividerWidth="2dp"
         app:xTabDividerHeight="15dp"
         app:xTabDividerColor="#000"
-        app:xTabTextSelectedBold="true"/>
+        app:xTabTextSelectedBold="true"
+        app:xTabTextBold="true"/>
 
 
     <android.support.v4.view.ViewPager

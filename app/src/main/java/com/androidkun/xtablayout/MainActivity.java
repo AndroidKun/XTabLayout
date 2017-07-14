@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             if(i%2==0){
                 fragments.add(new Fragment2());
             }else{
-
                 fragments.add(new Fragment1());
             }
         }
