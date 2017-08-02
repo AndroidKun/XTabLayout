@@ -2095,7 +2095,6 @@ public class XTabLayout extends HorizontalScrollView {
     }
 
     private int getTabMinWidth() {
-        Log.w("BBB", "getTabMinWidth");
         if (mPagerAdapter != null && xTabDisplayNum != 0) {
             WindowManager wm = (WindowManager) getContext()
                     .getSystemService(Context.WINDOW_SERVICE);
@@ -2106,6 +2105,11 @@ public class XTabLayout extends HorizontalScrollView {
             } else {
                 return wm.getDefaultDisplay().getWidth() / xTabDisplayNum;
             }
+        }
+        if(xTabDisplayNum!=0){
+            WindowManager wm = (WindowManager) getContext()
+                    .getSystemService(Context.WINDOW_SERVICE);
+            return wm.getDefaultDisplay().getWidth() / xTabDisplayNum;
         }
         if (mRequestedTabMinWidth != INVALID_WIDTH) {
             // If we have been given a min width, use it
