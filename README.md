@@ -5,7 +5,7 @@
 ### 1.添加XTabLayout依赖库
 #### 在app目录下的build.gradle的dependencies中添加如下引用：
 
-    compile 'com.androidkun:XTabLayout:1.1.3'
+    compile 'com.androidkun:XTabLayout:1.1.4'
     
 ### 2.在布局文件中设置XTabLayout属性
 
@@ -104,6 +104,8 @@
         app:xTabTextSelectedBold="true"
           <!-- 设置未选中Tab的文本是否粗体显示-->
         app:xTabTextBold="true"
-        
+
+## 1.1.4
+### <font color=#f00>修复反馈的BUG</font>
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     
