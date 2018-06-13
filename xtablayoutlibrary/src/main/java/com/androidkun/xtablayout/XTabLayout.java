@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -54,6 +55,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static android.R.attr.maxWidth;
 import static android.support.v4.view.ViewPager.SCROLL_STATE_DRAGGING;
@@ -208,6 +210,7 @@ public class XTabLayout extends HorizontalScrollView {
     private int dividerGravity;
 
     private XTabLayout.OnTabSelectedListener mOnTabSelectedListener;
+    private List<OnTabSelectedListener> mOnTabSelectedListenerList = new ArrayList<>();
 
     private ValueAnimatorCompat mScrollAnimator;
 
@@ -261,6 +264,7 @@ public class XTabLayout extends HorizontalScrollView {
                 mTabPaddingEnd);
         mTabPaddingBottom = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabPaddingBottom,
                 mTabPaddingBottom);
+
 
         xTabTextAllCaps = a.getBoolean(R.styleable.XTabLayout_xTabTextAllCaps, false);
 
@@ -535,6 +539,10 @@ public class XTabLayout extends HorizontalScrollView {
      */
     public void setOnTabSelectedListener(XTabLayout.OnTabSelectedListener onTabSelectedListener) {
         mOnTabSelectedListener = onTabSelectedListener;
+    }
+
+    public void addOnTabSelectedListener(XTabLayout.OnTabSelectedListener onTabSelectedListener) {
+        mOnTabSelectedListenerList.add(onTabSelectedListener);
     }
 
     @NonNull
@@ -1081,6 +1089,9 @@ public class XTabLayout extends HorizontalScrollView {
                 if (mOnTabSelectedListener != null) {
                     mOnTabSelectedListener.onTabReselected(mSelectedTab);
                 }
+                for (OnTabSelectedListener onTabSelectedListener : mOnTabSelectedListenerList) {
+                    onTabSelectedListener.onTabReselected(mSelectedTab);
+                }
                 animateToTab(tab.getPosition());
             }
         } else {
@@ -1100,9 +1111,15 @@ public class XTabLayout extends HorizontalScrollView {
             if (mSelectedTab != null && mOnTabSelectedListener != null) {
                 mOnTabSelectedListener.onTabUnselected(mSelectedTab);
             }
+            for (OnTabSelectedListener onTabSelectedListener : mOnTabSelectedListenerList) {
+                onTabSelectedListener.onTabUnselected(mSelectedTab);
+            }
             mSelectedTab = tab;
             if (mSelectedTab != null && mOnTabSelectedListener != null) {
                 mOnTabSelectedListener.onTabSelected(mSelectedTab);
+            }
+            for (OnTabSelectedListener onTabSelectedListener : mOnTabSelectedListenerList) {
+                onTabSelectedListener.onTabSelected(mSelectedTab);
             }
         }
     }
@@ -1702,7 +1719,6 @@ public class XTabLayout extends HorizontalScrollView {
             final boolean hasText = !TextUtils.isEmpty(text);
             if (textView != null) {
                 if (hasText) {
-                    Log.w("AAA", "title:" + text);
                     textView.setAllCaps(xTabTextAllCaps);
                     textView.setText(text);
                     textView.setVisibility(VISIBLE);
@@ -1955,6 +1971,8 @@ public class XTabLayout extends HorizontalScrollView {
         }
 
         private void setIndicatorPosition(int left, int right) {
+            left = left+mTabPaddingStart;
+            right = right-mTabPaddingEnd;
             if (left != mIndicatorLeft || right != mIndicatorRight) {
                 // If the indicator's left/right has changed, invalidate
                 mIndicatorLeft = left;

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/XTabLayout.iml" filepath="$PROJECT_DIR$/XTabLayout.iml" />
+      <module fileurl="file://D:\github\xTabLayout\XTabLayout.iml" filepath="D:\github\xTabLayout\XTabLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\github\xTabLayout\app\app.iml" filepath="D:\github\xTabLayout\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xTabLayout.iml" filepath="$PROJECT_DIR$/xTabLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/xtablayoutlibrary/xtablayoutlibrary.iml" filepath="$PROJECT_DIR$/xtablayoutlibrary/xtablayoutlibrary.iml" />
+      <module fileurl="file://D:\github\xTabLayout\xtablayoutlibrary\xtablayoutlibrary.iml" filepath="D:\github\xTabLayout\xtablayoutlibrary\xtablayoutlibrary.iml" />
     </modules>
   </component>
 </project>
