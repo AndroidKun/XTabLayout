@@ -4,6 +4,8 @@
     <declare-styleable name="XTabLayout">
         <attr name="xTabIndicatorHeight" format="dimension"/>
         <attr name="xTabIndicatorWidth" format="dimension"/>
+        <attr name="xTabIndicatorRoundX" format="dimension"/>
+        <attr name="xTabIndicatorRoundY" format="dimension"/>
         <attr name="xTabIndicatorColor" format="color"/>
         <attr name="xTabPadding" format="dimension"/>
         <attr name="xTabPaddingStart" format="dimension"/>

@@ -5,22 +5,29 @@
 ### 1.添加XTabLayout依赖库
 #### 在app目录下的build.gradle的dependencies中添加如下引用：
 
-    compile 'com.androidkun:XTabLayout:1.1.4'
+    compile 'com.androidkun:XTabLayout:1.1.5'
     
 ### 2.在布局文件中设置XTabLayout属性
 
     <com.androidkun.xtablayout.XTabLayout
-        android:id="@+id/xTablayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:xTabMode="scrollable"
-        app:xTabIndicatorColor="#0f0"
-        app:xTabIndicatorHeight="4dp"
-        app:xTabIndicatorWidth="15dp"
-        app:xTabSelectedTextColor="#f00"
-        app:xTabTextColor="#000"
-        app:xTabTextSize="15sp"
-        app:xTabSelectedTextSize="20sp"/>
+            android:id="@+id/xTablayout"
+            android:layout_width="match_parent"
+            android:layout_height="130px"
+            app:xTabBackgroundColor="#ff0"
+            app:xTabDividerWidthWidthText="true"
+            app:xTabMode="scrollable"
+            app:xTabIndicatorColor="#0f0"
+            app:xTabIndicatorHeight="4dp"
+            app:xTabIndicatorRoundX="2dp"
+            app:xTabIndicatorRoundY="2dp"
+            app:xTabSelectedTextColor="#f00"
+            app:xTabTextColor="#000"
+            app:xTabTextSize="15sp"
+            app:xTabDisplayNum="4"
+            app:xTabSelectedTextSize="20sp"
+            app:xTabDividerWidth="2dp"
+            app:xTabDividerHeight="15dp"
+            app:xTabDividerColor="#000"/>
      
 #### TabLayout有的属性，在XTabLayout中都会有，属性名称都是前面加个x，后面的t变成大写。
 #### 其中增加了xTabIndicatorWidth用于设置指示器长度，xTabTextSize用于设置未选中项的字体大小，xTabSelectedTextSize用于设置选中项的字体大小。
@@ -107,5 +114,8 @@
 
 ## 1.1.4
 ### <font color=#f00>修复反馈的BUG</font>
+
+## 1.1.5
+### <font color=#f00>增加指示器圆角功能</font>
 # [CSDN地址](http://blog.csdn.net/a1533588867/article/details/53810409)
     

@@ -18,21 +18,18 @@ package com.androidkun.xtablayout;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.design.R;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.androidkun.xtablayoutlibrary.R;
 
 /**
  * TabItem is a special 'view' which allows you to declare tab items for a {@link TabLayout}
  * within a layout. This view is not actually added to TabLayout, it is just a dummy which allows
  * setting of a tab items's text, icon and custom layout. See TabLayout for more information on how
  * to use it.
- *
- * @attr ref android.support.design.R.styleable#TabItem_android_icon
- * @attr ref android.support.design.R.styleable#TabItem_android_text
- * @attr ref android.support.design.R.styleable#TabItem_android_layout
  *
  * @see TabLayout
  */
