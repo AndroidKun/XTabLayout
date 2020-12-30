@@ -186,8 +186,8 @@ public class XTabLayout extends HorizontalScrollView {
     private boolean xTabTextSelectedBold;
     private float mTabTextMultiLineSize;
 
-    private final int xTabBackgroundColor;
-    private final int xTabSelectedBackgroundColor;
+    private final Drawable xTabBackgroundColor;
+    private final Drawable xTabSelectedBackgroundColor;
 
     private int mTabMaxWidth = Integer.MAX_VALUE;
     private final int mRequestedTabMinWidth;
@@ -305,8 +305,8 @@ public class XTabLayout extends HorizontalScrollView {
                 INVALID_WIDTH);
         mRequestedTabMaxWidth = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabMaxWidth,
                 INVALID_WIDTH);
-        xTabBackgroundColor = a.getColor(R.styleable.XTabLayout_xTabBackgroundColor, 0);
-        xTabSelectedBackgroundColor = a.getColor(R.styleable.XTabLayout_xTabSelectedBackgroundColor, 0);
+        xTabBackgroundColor = a.getDrawable(R.styleable.XTabLayout_xTabBackgroundColor);
+        xTabSelectedBackgroundColor = a.getDrawable(R.styleable.XTabLayout_xTabSelectedBackgroundColor);
 
         mContentInsetStart = a.getDimensionPixelSize(R.styleable.XTabLayout_xTabContentStart, 0);
         mMode = a.getInt(R.styleable.XTabLayout_xTabMode, MODE_FIXED);
@@ -1488,13 +1488,14 @@ public class XTabLayout extends HorizontalScrollView {
             }
         }
 
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void setSelected(boolean selected) {
             final boolean changed = (isSelected() != selected);
             super.setSelected(selected);
             if (!selected) {
-                if (xTabBackgroundColor != 0) {
-                    setBackgroundColor(xTabBackgroundColor);
+                if (xTabBackgroundColor != null) {
+                    setBackground(xTabBackgroundColor);
                 }
                 mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabTextSize);
                 if (xTabTextBold) {
@@ -1504,8 +1505,8 @@ public class XTabLayout extends HorizontalScrollView {
                 }
             }
             if (changed && selected) {
-                if (xTabSelectedBackgroundColor != 0) {
-                    setBackgroundColor(xTabSelectedBackgroundColor);
+                if (xTabSelectedBackgroundColor != null) {
+                    setBackground(xTabSelectedBackgroundColor);
                 }
                 sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED);
 
