@@ -26,20 +26,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0+'
-    testCompile 'junit:junit:4.12'
+    api 'com.android.support:appcompat-v7:23.4.0'
+    api 'com.android.support:design:23.4.0+'
+    testImplementation 'junit:junit:4.12'
 }
 
 publish {
     userOrg = 'androidkun'
     groupId = 'com.androidkun'
     artifactId = 'XTabLayout'
-    publishVersion = '1.1.5'
+    publishVersion = '1.1.6'
     desc = 'Added support to modify text size and indicator width based on the original TabLayout.'
     website = 'https://github.com/AndroidKun/XTabLayout'
 }
